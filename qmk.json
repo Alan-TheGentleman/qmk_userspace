@@ -2,4 +2,3 @@
     "userspace_version": "1.0",
     "build_targets": [["bastardkb/charybdis/3x5", "vendor"]]
 }
-
