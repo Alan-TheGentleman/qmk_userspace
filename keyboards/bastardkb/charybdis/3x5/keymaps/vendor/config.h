@@ -28,9 +28,9 @@
 
 /* Tapping configuration */
 #define TAPPING_TERM 125
-#define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
-#define TAPPING_FORCE_HOLD
+// #define PERMISSIVE_HOLD
+// #define IGNORE_MOD_TAP_INTERRUPT
+// #define TAPPING_FORCE_HOLD
 
 /* Charybdis-specific features. */
 
