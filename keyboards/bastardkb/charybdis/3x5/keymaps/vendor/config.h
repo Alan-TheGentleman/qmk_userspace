@@ -27,8 +27,8 @@
 #endif // __arm__
 
 /* Tapping configuration */
-#define TAPPING_TERM 130
-#define PERMISSIVE_HOLD
+#define TAPPING_TERM 140
+// #define PERMISSIVE_HOLD
 // #define IGNORE_MOD_TAP_INTERRUPT
 // #define TAPPING_FORCE_HOLD
 
