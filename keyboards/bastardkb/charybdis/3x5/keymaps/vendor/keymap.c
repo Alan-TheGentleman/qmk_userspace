@@ -61,7 +61,7 @@ static uint16_t auto_pointer_layer_timer = 0;
 /** \brief QWERTY layout (3 rows, 10 columns). */
 #define LAYOUT_LAYER_BASE                                                                     \
        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
-       KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, \
+       KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, \
        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, \
                       ESC_MED, SPC_COD, TAB_NUM, KC_ENT, BSP_NAV
 
@@ -106,7 +106,7 @@ static uint16_t auto_pointer_layer_timer = 0;
  */
 #define LAYOUT_LAYER_CODING                                                                 \
     XXXXXXX, XXXXXXX, XXXXXXX,S(KC_4), XXXXXXX, S(KC_6),S(KC_9), S(KC_0),   KC_MINS,  XXXXXXX, \
-    KC_LSFT, S(KC_2), S(KC_3),S(KC_5), XXXXXXX, S(KC_7),  S(KC_LBRC),   S(KC_RBRC),   KC_EQL, KC_QUOT, \
+    KC_LSFT, S(KC_2), S(KC_3),S(KC_5), XXXXXXX, S(KC_7),  S(KC_LBRC),   S(KC_RBRC),   KC_EQL, KC_SCLN, \
      KC_GRV, XXXXXXX, XXXXXXX,S(KC_SLSH), XXXXXXX, S(KC_8),   KC_LBRC,   KC_RBRC,   S(KC_1),  KC_BSLS, \
                        KC_LGUI, _______, KC_LALT, KC_ENT, KC_LCTL
 
