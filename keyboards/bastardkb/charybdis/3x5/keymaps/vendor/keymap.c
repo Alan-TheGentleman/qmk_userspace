@@ -124,7 +124,7 @@ _______, KC_MPLY, KC_MSTP, KC_MSTP, KC_MPLY
 
 /** \brief Mouse emulation and pointer functions. */
 #define LAYOUT_LAYER_POINTER                                                                  \
-XXXXXXX,  XXXXXXX, XXXXXXX, DPI_MOD, S_D_MOD, S_D_MOD, DPI_MOD, XXXXXXX,  XXXXXXX, XXXXXXX, \
+XXXXXXX,  XXXXXXX, DPI_RMOD, DPI_MOD, S_D_MOD, S_D_MOD, DPI_MOD, DPI_RMOD,  XXXXXXX, XXXXXXX, \
 ______________HOME_ROW_GACS_L______________, ______________HOME_ROW_GACS_R______________, \
 _______, DRGSCRL, SNIPING, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, SNIPING, DRGSCRL, _______, \
 KC_BTN2, KC_BTN1, KC_BTN3, KC_BTN3, KC_BTN1
