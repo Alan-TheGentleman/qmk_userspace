@@ -105,7 +105,7 @@ XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX
  * from the base layer to enable auto-repeat.
  */
 #define LAYOUT_LAYER_CODING                                                                 \
-XXXXXXX, XXXXXXX, XXXXXXX,S(KC_4), XXXXXXX, S(KC_6),S(KC_9), S(KC_0),   KC_MINS,  XXXXXXX, \
+XXXXXXX, KC_GRV, XXXXXXX,S(KC_4), XXXXXXX, S(KC_6),S(KC_9), S(KC_0),   KC_MINS,  XXXXXXX, \
 KC_LSFT, S(KC_2), S(KC_3),S(KC_5), XXXXXXX, S(KC_7),  S(KC_LBRC),   S(KC_RBRC),   KC_EQL, KC_QUOT, \
 KC_GRV, XXXXXXX, XXXXXXX,S(KC_SLSH), XXXXXXX, S(KC_8),   KC_LBRC,   KC_RBRC,   S(KC_1),  KC_BSLS, \
 KC_LGUI, _______, KC_LALT, KC_ENT, KC_LCTL
