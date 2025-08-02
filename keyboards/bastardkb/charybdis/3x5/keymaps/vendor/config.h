@@ -42,14 +42,8 @@
 /* RGB Matrix optimizations */
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 150
 
-/* Set your favorite RGB mode as default (10 presses from base) */
-/* If BAND_SPIRAL_VAL isn't the right one, try these alternatives:
-   - RGB_MATRIX_CYCLE_ALL (often #10)
-   - RGB_MATRIX_CYCLE_LEFT_RIGHT
-   - RGB_MATRIX_RAINBOW_MOVING_CHEVRON
-   Test and change if needed */
-
-#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_ALL
+/* Enable only CYCLE_LEFT_RIGHT effect (white background + red band moving left to right) */
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_LEFT_RIGHT
 
 /* Keep only essential RGB effects, disable the rest to save space */
 #define DISABLE_RGB_MATRIX_ALPHAS_MODS
@@ -62,13 +56,13 @@
 #define DISABLE_RGB_MATRIX_BAND_PINWHEEL_VAL
 #define DISABLE_RGB_MATRIX_BAND_SPIRAL_SAT
 #define DISABLE_RGB_MATRIX_BAND_SPIRAL_VAL
-#define DISABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
 #define DISABLE_RGB_MATRIX_CYCLE_UP_DOWN
 #define DISABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
 #define DISABLE_RGB_MATRIX_CYCLE_OUT_IN
 #define DISABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
 #define DISABLE_RGB_MATRIX_CYCLE_PINWHEEL
 #define DISABLE_RGB_MATRIX_CYCLE_SPIRAL
+#define DISABLE_RGB_MATRIX_CYCLE_ALL
 /* Charybdis-specific features. */
 
 #ifdef POINTING_DEVICE_ENABLE
