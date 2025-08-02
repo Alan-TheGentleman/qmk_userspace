@@ -29,6 +29,10 @@ enum charybdis_keymap_layers {
     LAYER_NAVIGATION,
 };
 
+enum custom_keycodes {
+    DT_PRNT_ALL = SAFE_RANGE,
+};
+
 // Automatically enable sniping-mode on the pointer layer.
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
@@ -119,7 +123,7 @@ KC_LGUI, _______, KC_LALT, KC_ENT, KC_LCTL
 #define LAYOUT_LAYER_MEDIA                                                                    \
 XXXXXXX,RGB_RMOD, RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX,RGB_RMOD, RGB_TOG, RGB_MOD, XXXXXXX, \
 KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU, KC_MNXT, KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU, KC_MNXT, \
-DT_UP, DT_DOWN, DT_PRNT,  EE_CLR, QK_BOOT, QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, \
+DT_UP, DT_DOWN, DT_PRNT_ALL,  EE_CLR, QK_BOOT, QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, \
 _______, KC_MPLY, KC_MSTP, KC_MSTP, KC_MPLY
 
 /** \brief Mouse emulation and pointer functions. */
@@ -243,3 +247,51 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 // rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Usar multiplicadores relativos al base dinámico
+        case LGUI_T(KC_A):
+            return TAPPING_TERM + 115; // Base + 115ms
+        case LALT_T(KC_S):
+            return TAPPING_TERM + 65; // Base + 65ms
+        case LCTL_T(KC_D):
+            return TAPPING_TERM + 65; // Base + 65ms
+        case LSFT_T(KC_F):
+            return TAPPING_TERM - 15; // Base - 15ms
+
+        // Thumbs ligeramente bajo base
+        case LT(LAYER_MEDIA, KC_ESC):
+            return TAPPING_TERM - 5;
+        case LT(LAYER_CODING, KC_SPC):
+            return TAPPING_TERM - 5;
+        case LT(LAYER_NUMERAL, KC_TAB):
+            return TAPPING_TERM - 5;
+        case LT(LAYER_NAVIGATION, KC_BSPC):
+            return TAPPING_TERM - 5;
+
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case DT_PRNT_ALL:
+            if (record->event.pressed) {
+                // Función personalizada para mostrar todos los tapping terms
+                uint16_t base_term  = TAPPING_TERM;
+                uint16_t a_term     = get_tapping_term(LGUI_T(KC_A), record);
+                uint16_t s_term     = get_tapping_term(LALT_T(KC_S), record);
+                uint16_t d_term     = get_tapping_term(LCTL_T(KC_D), record);
+                uint16_t f_term     = get_tapping_term(LSFT_T(KC_F), record);
+                uint16_t thumb_term = get_tapping_term(LT(LAYER_CODING, KC_SPC), record);
+
+                // Mostrar en consola (si tienes debugging habilitado)
+                uprintf("Tapping Terms - Base:%u A:%u S:%u D:%u F:%u Thumbs:%u\n", base_term, a_term, s_term, d_term, f_term, thumb_term);
+            }
+            return false;
+    }
+    return true;
+}
+}
