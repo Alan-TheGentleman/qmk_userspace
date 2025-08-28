@@ -142,7 +142,6 @@ _______________DEAD_HALF_ROW_______________, _______________DEAD_HALF_ROW_______
 ______________HOME_ROW_GACS_L______________,  KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_CAPS, \
 _______________DEAD_HALF_ROW_______________,  KC_INS, KC_HOME, KC_PGDN, KC_PGUP, KC_END, \
 XXXXXXX, _______, XXXXXXX,  KC_ENT, KC_BSPC
-sdfasdfasdfasdfasdfggggtttsdfasdgqwerqwertsdzxzxbzxbzxcvae
 
 /**
  * \brief Add Home Row mod to a layout.
