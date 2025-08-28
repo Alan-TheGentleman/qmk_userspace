@@ -27,7 +27,7 @@
 #endif // __arm__
 
 /* Tapping configuration */
-#define TAPPING_TERM 135
+#define TAPPING_TERM 120
 #define TAPPING_TERM_PER_KEY
 // #define PERMISSIVE_HOLD
 // #define IGNORE_MOD_TAP_INTERRUPT

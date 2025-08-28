@@ -142,7 +142,7 @@ _______________DEAD_HALF_ROW_______________, _______________DEAD_HALF_ROW_______
 ______________HOME_ROW_GACS_L______________,  KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, KC_CAPS, \
 _______________DEAD_HALF_ROW_______________,  KC_INS, KC_HOME, KC_PGDN, KC_PGUP, KC_END, \
 XXXXXXX, _______, XXXXXXX,  KC_ENT, KC_BSPC
-
+sdfasdfasdfasdfasdfggggtttsdfasdgqwerqwertsdzxzxbzxbzxcvae
 
 /**
  * \brief Add Home Row mod to a layout.
@@ -245,7 +245,7 @@ void rgb_matrix_update_pwm_buffers(void);
 #endif
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    if (keycode == LGUI_T(KC_A)) return 250;
+    if (keycode == LGUI_T(KC_A)) return 180;
     if (keycode == LSFT_T(KC_F)) return 120;
     if (keycode == LALT_T(KC_S) || keycode == LCTL_T(KC_D)) return 200;
     return TAPPING_TERM;
