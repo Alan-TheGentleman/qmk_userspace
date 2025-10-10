@@ -1,6 +1,5 @@
 /**
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
- * Copyright 2023 casuanoob <casuanoob@hotmail.com> (@casuanoob)
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +16,21 @@
  */
 #pragma once
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT 8
-#define SPLIT_LAYER_STATE_ENABLE
-#define SPLIT_LED_STATE_ENABLE
+#ifdef VIA_ENABLE
+/* VIA configuration. */
+#    define DYNAMIC_KEYMAP_LAYER_COUNT 4
+#endif // VIA_ENABLE
 
-#define ENCODER_RESOLUTION 4
+#ifndef __arm__
+/* Disable unused features. */
+#    define NO_ACTION_ONESHOT
+#endif // __arm__
+
+/* Charybdis-specific features. */
+
+#ifdef POINTING_DEVICE_ENABLE
+// Automatically enable the pointer layer when moving the trackball.  See also:
+// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS`
+// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD`
+// #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#endif // POINTING_DEVICE_ENABLE

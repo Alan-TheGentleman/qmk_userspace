@@ -131,7 +131,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-
 #ifdef POINTING_DEVICE_ENABLE
 #    ifdef DILEMMA_AUTO_SNIPING_ON_LAYER
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -139,7 +138,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 #    endif // DILEMMA_AUTO_SNIPING_ON_LAYER
-#endif     // POINTING_DEVICE_ENABLEE
+#endif     // POINTING_DEVICE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.

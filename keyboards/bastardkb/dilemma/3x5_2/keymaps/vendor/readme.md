@@ -1,6 +1,6 @@
-# Dilemma Max `via` keymap
+# Dilemma `via` keymap
 
-The Dilemma Max `via` keymap is based on the original [Dactyl Manuform](../../../../../handwired/dactyl_manuform) default keymap, with some features and changes specific to the Dilemma.
+The Dilemma `via` keymap is based on a QWERTY layout with [home row mods](https://precondition.github.io/home-row-mods) and [Miryoku-inspired layers](https://github.com/manna-harbour/miryoku), and some features and changes specific to the Dilemma.
 
 This layout also supports VIA.
 
@@ -44,4 +44,24 @@ Change the value of `DILEMMA_AUTO_SNIPING_ON_LAYER` to automatically enable snip
 
 ```c
 #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
+```
+
+### Auto pointer layer
+
+The pointer layer can be automatically enabled when moving the trackball. To enable or disable this behavior, add or remove the following define:
+
+```c
+#define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+```
+
+By default, the layer is turned off 1 second after the last registered trackball movement:
+
+```c
+#define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
+```
+
+The trigger sensibility can also be tuned. The lower the value, the more sensible the trigger:
+
+```c
+#define DILEMMA_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 8
 ```

@@ -1,6 +1,6 @@
-# Dilemma Max `via` keymap
+# Dilemma `via` keymap
 
-The Dilemma Max `via` keymap is based on the original [Dactyl Manuform](../../../../../handwired/dactyl_manuform) default keymap, with some features and changes specific to the Dilemma.
+The Dilemma `via` keymap is based on a QWERTY layout with [home row mods](https://precondition.github.io/home-row-mods) and [Miryoku-inspired layers](https://github.com/manna-harbour/miryoku), and some features and changes specific to the Dilemma.
 
 This layout also supports VIA.
 
