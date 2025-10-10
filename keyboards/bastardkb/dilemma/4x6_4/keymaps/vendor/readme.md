@@ -20,24 +20,16 @@ Los home row mods están configurados con las mismas velocidades que el Charybdi
 
 ## Capas
 
-Este keymap tiene 7 capas:
+Este keymap tiene 6 capas:
 
 ### 1. Base Layer (QWERTY)
 - Layout QWERTY con home row mods
-- **Acceso a capas:**
-  - Hold MAGIC key (top left) → Magic layer
-  - Hold Space → Programming layer
-  - Thumb: Numbers layer
-  - Hold Backspace → NAV layer
-  - Hold Z o / → Pointer layer
+- **Thumb keys:**
+  - Left: Mouse Click 1, Space, Programming layer, Numbers layer
+  - Right: Magic layer, Enter, NAV layer (hold backspace), Mute
+- **Acceso a Pointer layer:** Hold Z o /
 
-### 2. Lower Layer
-- **Navegación:** Flechas, Home, End, PgUp, PgDn
-- **Keypad numérico:** P0-P9 con operadores
-- **F11/F12** para acceso rápido
-- Entrada de datos numéricos
-
-### 3. Magic Layer (Media del Charybdis)
+### 2. Magic Layer (Media del Charybdis)
 - **RGB Controls** (simétricos en ambas manos):
   - RGB_TOG, RGB_MOD, RGB_RMOD
 - **Media controls** (simétricos en ambas manos):
@@ -50,25 +42,25 @@ Este keymap tiene 7 capas:
   - EE_CLR (EEPROM clear)
   - TO(0) (return to base)
 
-### 4. Programming Layer
+### 3. Programming Layer
 - **Símbolos para código:**
   - Brackets: `()`, `{}`, `[]`, `<>`
   - Operators: `@`, `#`, `%`, `&`, `*`, `$`
   - Special: `` ` ``, `^`, `=`, `!`, `\`, `?`, `-`
 
-### 5. Numbers Layer
+### 4. Numbers Layer
 - **Números 1-9 y 0** en mano derecha
 - **F-keys** (F1-F9) en mano izquierda
 - **Mods** en home row para combos
 
-### 6. NAV Layer
+### 5. NAV Layer
 - **Navegación:**
   - Arrows: Left, Down, Up, Right
   - Home, End, PgUp, PgDn
   - Insert, Caps Lock
 - **Mods** en home row izquierdo
 
-### 7. Pointer Layer (estilo Charybdis)
+### 6. Pointer Layer (estilo Charybdis)
 - **DPI Controls** (top row, simétricos):
   - DPI_RMOD: Reverse DPI (con Shift invierte dirección)
   - DPI_MOD: Ajuste de DPI
@@ -87,7 +79,6 @@ Este keymap tiene 7 capas:
 | Capa | Encoder Izquierdo | Encoder Derecho |
 |------|-------------------|-----------------|
 | Base | Scroll | Volume |
-| Lower | Up/Down | Left/Right |
 | Magic | RGB Hue | RGB Saturation |
 | Programming | Page Up/Down | Volume |
 | Numbers | Page Up/Down | Volume |
@@ -131,7 +122,7 @@ Para auto-activar sniping en la capa Pointer, descomenta en `keymap.c`:
 
 ## VIA Support
 
-Soporta VIA con 8 capas configurables.
+Soporta VIA con 6 capas configurables.
 
 ## Características técnicas
 

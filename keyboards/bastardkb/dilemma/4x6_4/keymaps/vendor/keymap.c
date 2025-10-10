@@ -19,7 +19,6 @@
 
 enum dilemma_keymap_layers {
     LAYER_BASE = 0,
-    LAYER_LOWER,
     LAYER_MAGIC,
     LAYER_PROGRAMMING,
     LAYER_NUMBERS,
@@ -30,7 +29,6 @@ enum dilemma_keymap_layers {
 // Automatically enable sniping-mode on the pointer layer.
 // #define DILEMMA_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
-#define LOWER MO(LAYER_LOWER)
 #define MAGIC MO(LAYER_MAGIC)
 #define PROG MO(LAYER_PROGRAMMING)
 #define NUMBS MO(LAYER_NUMBERS)
@@ -49,43 +47,29 @@ enum dilemma_keymap_layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       MAGIC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,       KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,
+       KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,       KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSLS,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       KC_ESC, LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G,       KC_H, RSFT_T(KC_J), RCTL_T(KC_K), LALT_T(KC_L), RGUI_T(KC_SCLN), KC_QUOT,
+      KC_LSFT, LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G,       KC_H, RSFT_T(KC_J), RCTL_T(KC_K), LALT_T(KC_L), RGUI_T(KC_SCLN), KC_QUOT,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
       KC_GRV,    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LALT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                      KC_LALT, KC_BSPC,  KC_SPC,    PROG,      NUMBS,  KC_ENT,     NAV,  KC_MUTE
-  //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
-  ),
-
-  [LAYER_LOWER] = LAYOUT(
-  // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME,    KC_LPRN, KC_NUM,  KC_PEQL, KC_PSLS, KC_PAST, KC_PSCR,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       _______, XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX,  KC_END,    KC_RPRN,  KC_P7,   KC_P8,   KC_P9, KC_PMNS, KC_SCRL,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGUP,    KC_PERC,  KC_P4,   KC_P5,   KC_P6, KC_PPLS, KC_PEQL,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       _______, KC_APP,  XXXXXXX,  KC_F11,  KC_F12, KC_PGDN,    KC_COMM,  KC_P1,   KC_P2,   KC_P3, KC_PENT, KC_PDOT,
-  // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                         KC_INS,  KC_F11,  KC_F12, _______,       KC_P0,   KC_P0, KC_PDOT, _______
+                      KC_BTN1,  KC_SPC,    PROG,   NUMBS,       MAGIC,  KC_ENT,     NAV,  KC_MUTE
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
   ),
 
   [LAYER_MAGIC] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-      XXXXXXX, XXXXXXX, RGB_RMOD, RGB_TOG, RGB_MOD, XXXXXXX,    XXXXXXX, RGB_RMOD, RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX,
+      XXXXXXX, RGB_RMOD, RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX,    XXXXXXX, RGB_RMOD, RGB_TOG, RGB_MOD, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      XXXXXXX, KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU, KC_MNXT,    KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU, KC_MNXT, XXXXXXX,
+      KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU, KC_MNXT, XXXXXXX,    XXXXXXX, KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU, KC_MNXT,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      XXXXXXX,  DT_UP,  DT_DOWN, DT_PRNT,  EE_CLR, QK_BOOT,    QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       DT_UP,  DT_DOWN, DT_PRNT,  EE_CLR, QK_BOOT, XXXXXXX,    XXXXXXX, QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   TO(0),
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                       _______, KC_MPLY, KC_MSTP, XXXXXXX,    XXXXXXX, KC_MSTP, KC_MPLY, XXXXXXX
+                       _______, KC_MPLY, KC_MSTP, XXXXXXX,    XXXXXXX, KC_MSTP, KC_MPLY, _______
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
   ),
 
@@ -161,7 +145,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 void rgb_matrix_update_pwm_buffers(void);
 #endif // RGB_MATRIX_ENABLE
 
-// Custom tapping terms matching Charybdis configuration
+// Custom tapping terms for home row mods
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_A):
@@ -184,7 +168,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // clang-format off
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [LAYER_BASE]        = {ENCODER_CCW_CW(KC_WH_U, KC_WH_D), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
-    [LAYER_LOWER]       = {ENCODER_CCW_CW(KC_UP, KC_DOWN), ENCODER_CCW_CW(KC_LEFT, KC_RGHT)},
     [LAYER_MAGIC]       = {ENCODER_CCW_CW(RGB_HUD, RGB_HUI), ENCODER_CCW_CW(RGB_SAD, RGB_SAI)},
     [LAYER_PROGRAMMING] = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     [LAYER_NUMBERS]     = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
