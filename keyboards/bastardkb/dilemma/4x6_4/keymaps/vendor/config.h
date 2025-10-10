@@ -15,10 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #pragma once
+
+
+/* Tapping configuration for home row mods */
+#define TAPPING_TERM 120
+#define TAPPING_TERM_PER_KEY
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
 #define SPLIT_LAYER_STATE_ENABLE
 #define SPLIT_LED_STATE_ENABLE
 
 #define ENCODER_RESOLUTION 4
+
+
