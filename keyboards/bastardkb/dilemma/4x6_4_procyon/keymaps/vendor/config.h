@@ -29,7 +29,5 @@
 
 #define ENCODER_RESOLUTION 4
 
-/* Invert trackpad scroll direction */
-#define DILEMMA_DRAGSCROLL_REVERSE_Y
 
 
