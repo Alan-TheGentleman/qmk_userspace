@@ -1,5 +1,5 @@
 {
     "userspace_version": "1.0",
-    "build_targets": [["bastardkb/dilemma/4x6_4", "vendor"]]
+    "build_targets": [["bastardkb/dilemma/4x6_4_procyon", "vendor"]]
 }
 
