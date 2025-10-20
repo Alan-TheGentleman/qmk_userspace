@@ -117,13 +117,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_POINTER] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       XXXXXXX, XXXXXXX, DPI_RMOD, DPI_MOD, S_D_MOD, XXXXXXX,    XXXXXXX, S_D_MOD, DPI_MOD, DPI_RMOD, XXXXXXX, XXXXXXX,
+       XXXXXXX, XXXXXXX, DPI_RMOD, DPI_MOD, S_D_MOD, SNP_RMOD,    SNP_RMOD, S_D_MOD, DPI_MOD, DPI_RMOD, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,    XXXXXXX, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       XXXXXXX, _______, DRGSCRL, SNIPING, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, SNIPING, DRGSCRL, _______, XXXXXXX,
+       XXXXXXX, _______, DRGSCRL, SNIPING, SNP_TOG, XXXXXXX,    XXXXXXX, SNP_TOG, SNIPING, DRGSCRL, _______, XXXXXXX,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
                          KC_BTN2, KC_BTN1, KC_BTN3, XXXXXXX,    XXXXXXX, KC_BTN3, KC_BTN1, KC_BTN2
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
@@ -140,9 +140,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 #    endif // DILEMMA_AUTO_SNIPING_ON_LAYER
 
-// Invert scroll direction only (not cursor movement)
+// Invert scroll direction and lower sensitivity
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-    mouse_report.v = -mouse_report.v;
+    mouse_report.v = -mouse_report.v / 2;
+    mouse_report.h = mouse_report.h / 2;
     return mouse_report;
 }
 #endif     // POINTING_DEVICE_ENABLEE
