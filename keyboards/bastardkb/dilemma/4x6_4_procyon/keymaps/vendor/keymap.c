@@ -117,13 +117,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_POINTER] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       XXXXXXX, XXXXXXX, DPI_RMOD, DPI_MOD, S_D_MOD, SNP_RMOD,    SNP_RMOD, S_D_MOD, DPI_MOD, DPI_RMOD, XXXXXXX, XXXXXXX,
+       XXXXXXX, XXXXXXX, DPI_RMOD, DPI_MOD, S_D_MOD, S_D_RMOD,    S_D_RMOD, S_D_MOD, DPI_MOD, DPI_RMOD, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,    XXXXXXX, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       XXXXXXX, _______, DRGSCRL, SNIPING, SNP_TOG, XXXXXXX,    XXXXXXX, SNP_TOG, SNIPING, DRGSCRL, _______, XXXXXXX,
+       XXXXXXX, _______, DRGSCRL, SNIPING, SNP_TOG, DRG_TOG,    DRG_TOG, SNP_TOG, SNIPING, DRGSCRL, _______, XXXXXXX,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
                          KC_BTN2, KC_BTN1, KC_BTN3, XXXXXXX,    XXXXXXX, KC_BTN3, KC_BTN1, KC_BTN2
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
