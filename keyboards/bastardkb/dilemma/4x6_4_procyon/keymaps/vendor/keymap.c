@@ -140,10 +140,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 #    endif // DILEMMA_AUTO_SNIPING_ON_LAYER
 
-// Invert scroll direction and lower sensitivity
+// Invert scroll direction and slightly lower sensitivity
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-    mouse_report.v = -mouse_report.v / 2;
-    mouse_report.h = mouse_report.h / 2;
+    mouse_report.v = (-mouse_report.v * 3) / 4;
+    mouse_report.h = (mouse_report.h * 3) / 4;
     return mouse_report;
 }
 #endif     // POINTING_DEVICE_ENABLEE
