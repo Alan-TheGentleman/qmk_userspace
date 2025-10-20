@@ -29,5 +29,8 @@
 
 #define ENCODER_RESOLUTION 4
 
+/* Invert vertical scroll direction */
+#define DILEMMA_DRAGSCROLL_REVERSE_Y
+
 
 
