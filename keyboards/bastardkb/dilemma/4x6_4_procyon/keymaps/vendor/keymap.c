@@ -139,7 +139,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 #    endif // DILEMMA_AUTO_SNIPING_ON_LAYER
-#endif     // POINTING_DEVICE_ENABLE
+
+// Invert scroll direction only (not cursor movement)
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    mouse_report.v = -mouse_report.v;
+    return mouse_report;
+}
+#endif     // POINTING_DEVICE_ENABLEE
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
@@ -164,13 +170,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
     }
 }
-
-// Invert scroll direction only (not cursor movement)
-report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-    mouse_report.v = -mouse_report.v;
-    return mouse_report;
-}
-#endif     // POINTING_DEVICE_ENABLEE
 
 #ifdef ENCODER_MAP_ENABLE
 // clang-format off
