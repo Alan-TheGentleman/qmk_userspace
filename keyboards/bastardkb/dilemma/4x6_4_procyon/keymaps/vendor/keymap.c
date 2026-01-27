@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
       KC_GRV,    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LALT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                      KC_BTN1,  KC_SPC,    PROG,   NUMBS,       MAGIC,  KC_ENT,     NAV,  XXXXXXX
+                      MS_BTN1,  KC_SPC,    PROG,   NUMBS,       MAGIC,  KC_ENT,     NAV,  XXXXXXX
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
   ),
 
@@ -63,9 +63,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      QK_BOOT, RGB_SPI, RGB_SAI, RGB_HUI, RGB_VAI, RGB_TOG,    RGB_TOG, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, QK_BOOT,
+      QK_BOOT, RM_SPDU, RM_SATU, RM_HUEU, RM_VALU, RM_TOGG,    RM_TOGG, RM_VALU, RM_HUEU, RM_SATU, RM_SPDU, QK_BOOT,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       EE_CLR, RGB_SPD, RGB_SAD, RGB_HUD, RGB_VAD, RGB_MOD,    RGB_MOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD,  EE_CLR,
+       EE_CLR, RM_SPDD, RM_SATD, RM_HUED, RM_VALD, RM_NEXT,    RM_NEXT, RM_VALD, RM_HUED, RM_SATD, RM_SPDD,  EE_CLR,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
       KC_VOLU, KC_MUTE, KC_VOLD, KC_MPRV, KC_MNXT, XXXXXXX,    XXXXXXX, KC_MNXT, KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, _______, DRGSCRL, SNIPING, SNP_TOG, DRG_TOG,    DRG_TOG, SNP_TOG, SNIPING, DRGSCRL, _______, XXXXXXX,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                         KC_BTN2, KC_BTN1, KC_BTN3, XXXXXXX,    XXXXXXX, KC_BTN3, KC_BTN1, KC_BTN2
+                         MS_BTN2, MS_BTN1, MS_BTN3, XXXXXXX,    XXXXXXX, MS_BTN3, MS_BTN1, MS_BTN2
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
   ),
 };
@@ -175,11 +175,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // clang-format off
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [LAYER_BASE]        = {ENCODER_CCW_CW(KC_WH_U, KC_WH_D), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
-    [LAYER_MAGIC]       = {ENCODER_CCW_CW(RGB_HUD, RGB_HUI), ENCODER_CCW_CW(RGB_SAD, RGB_SAI)},
+    [LAYER_MAGIC]       = {ENCODER_CCW_CW(RM_HUED, RM_HUEU), ENCODER_CCW_CW(RM_SATD, RM_SATU)},
     [LAYER_PROGRAMMING] = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     [LAYER_NUMBERS]     = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     [LAYER_NAV]         = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
-    [LAYER_POINTER]     = {ENCODER_CCW_CW(RGB_HUD, RGB_HUI), ENCODER_CCW_CW(RGB_SAD, RGB_SAI)},
+    [LAYER_POINTER]     = {ENCODER_CCW_CW(RM_HUED, RM_HUEU), ENCODER_CCW_CW(RM_SATD, RM_SATU)},
 };
 // clang-format on
 #endif // ENCODER_MAP_ENABLE
