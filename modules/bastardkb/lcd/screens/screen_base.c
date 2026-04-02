@@ -48,6 +48,7 @@ static void        update_mod_dpi_number(lv_obj_t *obj, const dilemma_status_t c
 static void        update_mod_xx(lv_obj_t *obj, uint8_t mod_mask, const dilemma_status_t current_status, const dilemma_status_t prev_status);
 static void        update_rgb_effect(lv_obj_t *obj, const dilemma_status_t current_status, const dilemma_status_t prev_status);
 static const char *rgb_matrix_get_effect_name(void);
+static void        menu_base_go_base(void);
 static void        menu_base_go_pomodoro(void);
 static void        menu_base_change_theme(void);
 static void        load_screen_base_menu(void);
@@ -146,7 +147,7 @@ void init_screen_base(void) {
     /* ----- menus ----- */
     menus[0] = (obj_update_dilemma_menu_t){
         ui_create_menu_line(cont_menu, "Back to main"),
-        NULL,
+        &menu_base_go_base,
     };
     menus[1] = (obj_update_dilemma_menu_t){
         ui_create_menu_line(cont_menu, "Pomodoro"),
@@ -211,6 +212,10 @@ void housekeeping_task_screen_base(void) {
 
 static void menu_base_go_pomodoro(void) {
     set_current_module(MODULE_POMODORO);
+}
+
+static void menu_base_go_base(void) {
+    load_screen_base_base();
 }
 
 static void menu_base_change_theme(void) {
@@ -432,7 +437,6 @@ void refresh_screen_base(void) {
             case 0:
             default:
                 load_screen_base_base();
-                trigger_menu_element(menus, menu_index);
                 break;
             case 6:
                 // LAYER_LCD — show the LCD menu
@@ -450,6 +454,11 @@ void refresh_screen_base(void) {
 }
 
 bool process_record_screen_base(uint16_t keycode, keyrecord_t *record) {
+    if (keycode == LCD_MODULE_CHANGE_THEME && record->event.pressed) {
+        cycle_theme_and_save_in_eeprom();
+        return true;
+    }
+
     // TODO index is hardcoded...
     if (screen_index == 1) {
         process_record_menu(keycode, record, menus, &menu_index, sizeof(menus) / sizeof(obj_update_dilemma_menu_t));
