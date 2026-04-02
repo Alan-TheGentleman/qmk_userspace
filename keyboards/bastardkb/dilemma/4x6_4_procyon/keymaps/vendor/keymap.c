@@ -120,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_POINTER] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       XXXXXXX, XXXXXXX, DPI_RMOD, DPI_MOD, S_D_MOD, S_D_RMOD,    S_D_RMOD, S_D_MOD, DPI_MOD, DPI_RMOD, XXXXXXX, XXXXXXX,
+       XXXXXXX, XXXXXXX, DPI_RMOD, DPI_MOD, S_D_RMOD, S_D_MOD,    S_D_RMOD, S_D_MOD, DPI_MOD, DPI_RMOD, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
