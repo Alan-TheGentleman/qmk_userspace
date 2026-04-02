@@ -25,6 +25,7 @@ enum dilemma_keymap_layers {
     LAYER_NUMBERS,
     LAYER_NAV,
     LAYER_POINTER,
+    LAYER_LCD,
 };
 
 // Automatically enable sniping-mode on the pointer layer.
@@ -36,6 +37,7 @@ enum dilemma_keymap_layers {
 #define NAV LT(LAYER_NAV, KC_BSPC)
 #define PT_Z LT(LAYER_POINTER, KC_Z)
 #define PT_SLSH LT(LAYER_POINTER, KC_SLSH)
+#define LCD MO(LAYER_LCD)
 
 #ifndef POINTING_DEVICE_ENABLE
 #    define DRGSCRL KC_NO
@@ -56,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
       KC_GRV,    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LALT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                      MS_BTN1,  KC_SPC,    PROG,   NUMBS,       MAGIC,  KC_ENT,     NAV,  XXXXXXX
+                      MS_BTN1,  KC_SPC,    PROG,   NUMBS,       MAGIC,  KC_ENT,     NAV,      LCD
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
   ),
 
@@ -68,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        EE_CLR, RM_SPDD, RM_SATD, RM_HUED, RM_VALD, RM_NEXT,    RM_NEXT, RM_VALD, RM_HUED, RM_SATD, RM_SPDD,  EE_CLR,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      KC_VOLU, KC_MUTE, KC_VOLD, KC_MPRV, KC_MNXT,   LCDTH,      LCDME,  LCDPR,  LCDNE, KC_VOLD, KC_MUTE, KC_VOLU,
+      KC_VOLU, KC_MUTE, KC_VOLD, KC_MPRV, KC_MNXT, XXXXXXX,    XXXXXXX, KC_MNXT, KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
                        XXXXXXX, KC_MPLY, KC_MSTP, XXXXXXX,    XXXXXXX, KC_MSTP, KC_MPLY, XXXXXXX
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
@@ -129,6 +131,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          MS_BTN2, MS_BTN1, MS_BTN3, XXXXXXX,    XXXXXXX, MS_BTN3, MS_BTN1, MS_BTN2
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
   ),
+
+  [LAYER_LCD] = LAYOUT(
+  // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      LCDTH,   LCDPR,   LCDNE,   LCDME, XXXXXXX, XXXXXXX,
+  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
+                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, _______
+  //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
+  ),
 };
 // clang-format on
 
@@ -180,6 +196,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [LAYER_NUMBERS]     = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     [LAYER_NAV]         = {ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
     [LAYER_POINTER]     = {ENCODER_CCW_CW(RM_HUED, RM_HUEU), ENCODER_CCW_CW(RM_SATD, RM_SATU)},
+    [LAYER_LCD]         = {ENCODER_CCW_CW(LCDPR,   LCDNE),   ENCODER_CCW_CW(LCDPR,   LCDNE)},
 };
 // clang-format on
 #endif // ENCODER_MAP_ENABLE
