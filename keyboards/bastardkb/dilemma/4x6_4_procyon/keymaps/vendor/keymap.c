@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#include "keymap.h"
 
 enum dilemma_keymap_layers {
     LAYER_BASE = 0,
@@ -67,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        EE_CLR, RM_SPDD, RM_SATD, RM_HUED, RM_VALD, RM_NEXT,    RM_NEXT, RM_VALD, RM_HUED, RM_SATD, RM_SPDD,  EE_CLR,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      KC_VOLU, KC_MUTE, KC_VOLD, KC_MPRV, KC_MNXT, XXXXXXX,    XXXXXXX, KC_MNXT, KC_MPRV, KC_VOLD, KC_MUTE, KC_VOLU,
+      KC_VOLU, KC_MUTE, KC_VOLD, KC_MPRV, KC_MNXT,   LCDTH,      LCDME,  LCDPR,  LCDNE, KC_VOLD, KC_MUTE, KC_VOLU,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
                        XXXXXXX, KC_MPLY, KC_MSTP, XXXXXXX,    XXXXXXX, KC_MSTP, KC_MPLY, XXXXXXX
   //                    ╰───────────────────────────────────╯ ╰───────────────────────────────────╯
@@ -131,7 +132,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-
 #ifdef POINTING_DEVICE_ENABLE
 #    ifdef DILEMMA_AUTO_SNIPING_ON_LAYER
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -145,7 +145,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     mouse_report.v = -mouse_report.v;
     return mouse_report;
 }
-#endif     // POINTING_DEVICE_ENABLEE
+#endif // POINTING_DEVICE_ENABLEE
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.

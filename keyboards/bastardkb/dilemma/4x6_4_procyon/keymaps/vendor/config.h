@@ -18,7 +18,6 @@
 
 #pragma once
 
-
 /* Tapping configuration for home row mods */
 #define TAPPING_TERM 120
 #define TAPPING_TERM_PER_KEY
@@ -31,3 +30,8 @@
 
 #undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100
+
+/* LCD split transport */
+#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_MODS_ENABLE
+#define SPLIT_POINTING_ENABLE
