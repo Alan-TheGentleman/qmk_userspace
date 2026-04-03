@@ -41,12 +41,12 @@
 #ifdef QUANTUM_PAINTER_TASK_THROTTLE
 #    undef QUANTUM_PAINTER_TASK_THROTTLE
 #endif
-#define QUANTUM_PAINTER_TASK_THROTTLE 50 // 20 FPS — aggressive throttle for input responsiveness
+#define QUANTUM_PAINTER_TASK_THROTTLE 16 // 60 FPS ish
 #define RGB_MATRIX_MODE_NAME_ENABLE
 #ifdef QP_LVGL_TASK_PERIOD
 #    undef QP_LVGL_TASK_PERIOD
 #endif
-#define QP_LVGL_TASK_PERIOD 100 // ~10 FPS — aggressive throttle for input responsiveness
+#define QP_LVGL_TASK_PERIOD 33 // throttle lvgl for keyboard responsiveness
 
 // #define QUANTUM_PAINTER_DISPLAY_TIMEOUT 5000
 
