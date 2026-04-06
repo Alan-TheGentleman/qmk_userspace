@@ -9,12 +9,6 @@ typedef struct{
     void (*update_function)(void);
 } obj_update_dilemma_menu_t;
 
-// TODO move this to menu.h
-typedef struct {
-    uint16_t keycode;
-    keyrecord_t record;
-} dilemma_keycode_event_t;
-
 bool process_record_menu(uint16_t keycode, keyrecord_t *record, const obj_update_dilemma_menu_t menus[], uint8_t *menu_index, const uint8_t menu_size);
 void release_all_buttons(const obj_update_dilemma_menu_t menus[], const uint8_t menu_size);
 void press_menu_button(const obj_update_dilemma_menu_t button);

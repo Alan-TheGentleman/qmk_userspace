@@ -30,3 +30,9 @@
 
 #undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100
+
+/* LCD layer menu — override module default (4) to match our layer index */
+#ifdef LAYER_MENU
+#    undef LAYER_MENU
+#endif
+#define LAYER_MENU 6

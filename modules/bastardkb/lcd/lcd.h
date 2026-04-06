@@ -31,13 +31,12 @@ void              update_theme_color(void);
 
 bool      process_record_lcd(uint16_t keycode, keyrecord_t *record);
 
-void menu_info_sync_handler(uint8_t initiator2target_buffer_size, const void* initiator2target_buffer, uint8_t target2initiator_buffer_size, void* target2initiator_buffer);
+void module_sync_handler(uint8_t initiator2target_buffer_size, const void* initiator2target_buffer, uint8_t target2initiator_buffer_size, void* target2initiator_buffer);
 void refresh_lcd_info(void);
 void cycle_theme_and_save_in_eeprom(void);
 void init_display(void);
 void write_config_to_eeprom(void);
 
 void set_current_module(uint8_t module);
-// lcd_module_t* get_current_module(void);
 
 #endif

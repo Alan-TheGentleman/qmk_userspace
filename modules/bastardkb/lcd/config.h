@@ -1,6 +1,6 @@
 #pragma once
 
-#define SPLIT_TRANSACTION_IDS_KB RPC_ID_MOUSE_SYNC, RPC_ID_MENU_SYNC
+#define SPLIT_TRANSACTION_IDS_KB RPC_ID_MOUSE_SYNC, RPC_ID_KEYCODE_SYNC
 
 // QP stuff
 #define SPI_SCK_PIN GP22  // as per vik connector
@@ -41,17 +41,18 @@
 #ifdef QUANTUM_PAINTER_TASK_THROTTLE
 #    undef QUANTUM_PAINTER_TASK_THROTTLE
 #endif
-#define QUANTUM_PAINTER_TASK_THROTTLE 16 // 60 FPS ish
+#define QUANTUM_PAINTER_TASK_THROTTLE 32 // 30 FPS ish
 #define RGB_MATRIX_MODE_NAME_ENABLE
 #ifdef QP_LVGL_TASK_PERIOD
 #    undef QP_LVGL_TASK_PERIOD
 #endif
-#define QP_LVGL_TASK_PERIOD 33 // throttle lvgl for keyboard responsiveness
+#define QP_LVGL_TASK_PERIOD 66 // throttle lvgl for keyboard responsiveness
 
 // #define QUANTUM_PAINTER_DISPLAY_TIMEOUT 5000
 
 // Custom display stuff
 #define BK_PALETTE LV_PALETTE_CYAN
+#define LAYER_MENU 4
 
 #define SPLIT_TRANSPORT_MIRROR
 #define SPLIT_MODS_ENABLE
