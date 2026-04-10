@@ -1,5 +1,6 @@
 {
     "modules": [
-        "bastardkb/lcd"
+        "bastardkb/lcd",
+        "bastardkb/dilemma_sync"
     ]
 }

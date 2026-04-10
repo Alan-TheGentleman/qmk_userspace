@@ -8,14 +8,16 @@ SRC += theme.c
 SRC += ui_elements.c
 
 # LVGL fonts
-SRC += montserratbold14.c
-SRC += montserratbold13.c
-SRC += dmsans13.c
-SRC += dmsans14.c
-SRC += dmsans20medium.c
-SRC += dmsans14bold.c
-SRC += jetbrainsmono13.c
-SRC += jetbrainsmono14bold.c
+SRC += fonts/montserratbold14.c
+SRC += fonts/montserratbold13.c
+SRC += fonts/dmsans13.c
+SRC += fonts/dmsans14.c
+SRC += fonts/dmsans20medium.c
+SRC += fonts/dmsansbold40.c
+SRC += fonts/dmsans14bold.c
+SRC += fonts/jetbrainsmono13.c
+SRC += fonts/jetbrainsmono14bold.c
+SRC += fonts/jetbrainsmonoextrabold60.c
 
 # Screens
 SRC += screens/screen_base.c

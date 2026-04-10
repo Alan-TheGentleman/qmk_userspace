@@ -10,6 +10,9 @@
 #include "ui_elements.h"
 #include "utilities.h"
 
+
+LV_FONT_DECLARE(jetbrainsmonoextrabold60);
+
 typedef struct
 {
     lv_obj_t* obj;
@@ -24,8 +27,8 @@ static void menu_pomodoro_play_pause(void);
 static void menu_pomodoro_start_10(void);
 static lv_obj_t* ui_create_pomodoro_title(lv_obj_t* cont);
 static lv_obj_t* ui_create_pomodoro_time(lv_obj_t* cont);
-static lv_obj_t* ui_create_pomodoro_arc(lv_obj_t* cont);
-static void update_pomodoro_arc(lv_obj_t* obj);
+// static lv_obj_t* ui_create_pomodoro_arc(lv_obj_t* cont);
+// static void update_pomodoro_bar(lv_obj_t* obj);
 static void update_pomodoro_time(lv_obj_t* obj);
 
 static lv_obj_t* ui_screen_pomodoro;
@@ -60,14 +63,14 @@ void init_screen_pomodoro(void) {
         ui_create_pomodoro_title(cont),
         NULL,
     };
-    widgets[2] = (obj_update_dilemma_pomodoro_status_t){
-        ui_create_pomodoro_arc(cont),
-        &update_pomodoro_arc,
-    };
     widgets[1] = (obj_update_dilemma_pomodoro_status_t){
         ui_create_pomodoro_time(cont),
         &update_pomodoro_time,
     };
+    // widgets[2] = (obj_update_dilemma_pomodoro_status_t){
+    //     ui_create_progress_bar(cont, 4),
+    //     &update_pomodoro_bar,
+    // };
 
     /* ----- menus ----- */
     menus[0] = (obj_update_dilemma_menu_t){
@@ -113,30 +116,34 @@ static void menu_pomodoro_start_10(void) {
 }
 
 static void load_screen_pomodoro_base(void) {
-    load_screen_xx_base(menus, &screen_index, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_pomodoro);
+    load_screen_xx_base(menus, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_pomodoro);
 }
 
 static void load_screen_pomodoro_menu(void) {
-    load_screen_xx_menu(menus, &menu_index, &screen_index, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_pomodoro_menu);
+    load_screen_xx_menu(menus, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_pomodoro_menu);
 }
 
-void refresh_screen_pomodoro(void) {
+void housekeeping_task_screen_pomodoro(void) {
     static int last_layer;
     int current_layer = get_highest_layer(layer_state);
 
-    // TODO the layer is hardcoded.... and it will be different on Dilemma and Dilemma
     if (current_layer != last_layer)
     {
         switch (current_layer)
         {
             case 0:
-            default:
-                load_screen_pomodoro_base();
-                trigger_menu_element(menus, menu_index);
+                if (screen_index == 1) {
+                    load_screen_pomodoro_base();
+                    trigger_menu_element(menus, menu_index);
+                    menu_index = 0;
+                    screen_index = 0;
+                }
                 break;
             case LAYER_MENU:
-                // TODO replace with LAYER_LCD instead of hardcoding
-                load_screen_pomodoro_menu();
+                if (screen_index == 0) {
+                    load_screen_pomodoro_menu();
+                    screen_index = 1;
+                }
                 break;
         }
     }
@@ -144,8 +151,9 @@ void refresh_screen_pomodoro(void) {
     for (int i = 0; i < sizeof(widgets) / sizeof(obj_update_dilemma_pomodoro_status_t); i++)
     {
         lv_obj_t* obj = widgets[i].obj;
-        if (obj && widgets[i].update_function)
+        if (obj && widgets[i].update_function){
             widgets[i].update_function(obj);
+        }
     }
 
     last_layer = current_layer;
@@ -153,8 +161,10 @@ void refresh_screen_pomodoro(void) {
 
 static void update_pomodoro_time(lv_obj_t* obj) {
     if (timer_is_running == true) {
-        // TODO update the timer text
         uint32_t elapsed = timer_max - timer_elapsed32(timer_start);
+        if (timer_max < timer_elapsed32(timer_start)) {
+            elapsed = 0;
+        }
         uint16_t minutes_elapsed = elapsed / 60000;
         uint16_t seconds_elapsed = (elapsed % 60000) / 1000;
 
@@ -166,9 +176,9 @@ static void update_pomodoro_time(lv_obj_t* obj) {
 
         lv_label_set_text(obj, buffer);
     }
-    else {
-        lv_label_set_text(obj, "PAUSED");
-    }
+    // else {
+    //     lv_label_set_text(obj, "00:00");
+    // }
 }
 
 static lv_obj_t* ui_create_pomodoro_title(lv_obj_t* cont) {
@@ -194,70 +204,80 @@ static lv_obj_t* ui_create_pomodoro_title(lv_obj_t* cont) {
 static lv_obj_t* ui_create_pomodoro_time(lv_obj_t* cont) {
     lv_obj_t* button = lv_btn_create(cont);
     ui_styles_t* styles = get_current_ui_styles();
+
+
+    static lv_style_t style_text;
+    lv_style_init(&style_text);
+    // memcpy(&style_text, &styles->layer_name, sizeof(lv_style_t));
+    lv_style_set_text_font(&style_text, &jetbrainsmonoextrabold60);
+    lv_style_set_text_color(&style_text, lv_color_make(255, 255, 255));
+    lv_style_set_text_opa(&style_text, 255);
+
     lv_obj_add_style(button, &styles->layer_name, 0);
+    lv_obj_add_style(button, &style_text, 0);
     lv_obj_set_flex_grow(button, 1);                        // take all remaining space in line
     lv_obj_add_flag(button, LV_OBJ_FLAG_FLEX_IN_NEW_TRACK); // new line
 
     lv_obj_t* label = lv_label_create(button);
     // TODO, should this really be here?
-    lv_label_set_text(label, "PAUSED");
+    lv_label_set_text(label, "00:00");
     lv_obj_center(label);
     lv_obj_set_width(label, LV_SIZE_CONTENT);
-    lv_obj_set_height(label, 30);
+    // lv_obj_set_height(label, 80);
 
     return label;
 }
 
-static lv_obj_t* ui_create_pomodoro_arc(lv_obj_t* cont) {
-    lv_obj_t* button = lv_btn_create(cont);
-    lv_obj_t* arc = lv_arc_create(button);
-    ui_styles_t* styles = get_current_ui_styles();
+// static lv_obj_t* ui_create_pomodoro_arc(lv_obj_t* cont) {
+//     lv_obj_t* button = lv_btn_create(cont);
+//     lv_obj_t* arc = lv_arc_create(button);
+//     ui_styles_t* styles = get_current_ui_styles();
 
-    lv_obj_add_flag(button, LV_OBJ_FLAG_FLEX_IN_NEW_TRACK); // new line
-    lv_obj_set_flex_grow(button, 1);                        // take all remaining space in line
-    lv_obj_add_style(button, &styles->layer_name, 0);
+//     lv_obj_add_flag(button, LV_OBJ_FLAG_FLEX_IN_NEW_TRACK); // new line
+//     lv_obj_set_flex_grow(button, 1);                        // take all remaining space in line
+//     lv_obj_add_style(button, &styles->layer_name, 0);
 
-    lv_obj_add_style(arc, &styles->bar, LV_PART_INDICATOR);
+//     lv_obj_add_style(arc, &styles->bar, LV_PART_INDICATOR);
 
-    // TODO move this into a style init
-    // we could do a post-processing in style init where we copy over the
-    // values... right now this breaks on theme change each screen should have
-    // their own load_themes function, right now everything lives in theme.c
-    // ideally we should derive a new pomodoro_styles->arc from styles->bar, and
-    // then set the arc specific styles in the init function copy the bar color
-    // into the arc color
-    lv_style_value_t v;
-    lv_res_t res = lv_style_get_prop(&styles->bar, LV_STYLE_BG_COLOR, &v);
-    if (res == LV_RES_OK)
-    { /*Found*/
-        lv_style_set_arc_color(&styles->bar, v.color);
-        // hide the knob
-        lv_obj_remove_style(arc, NULL, LV_PART_KNOB);
-    }
+//     // TODO move this into a style init
+//     // we could do a post-processing in style init where we copy over the
+//     // values... right now this breaks on theme change each screen should have
+//     // their own load_themes function, right now everything lives in theme.c
+//     // ideally we should derive a new pomodoro_styles->arc from styles->bar, and
+//     // then set the arc specific styles in the init function copy the bar color
+//     // into the arc color
+//     lv_style_value_t v;
+//     lv_res_t res = lv_style_get_prop(&styles->bar, LV_STYLE_BG_COLOR, &v);
+//     if (res == LV_RES_OK)
+//     { /*Found*/
+//         lv_style_set_arc_color(&styles->bar, v.color);
+//         // hide the knob
+//         lv_obj_remove_style(arc, NULL, LV_PART_KNOB);
+//     }
 
-    lv_obj_set_size(arc, 130, 130);
-    lv_arc_set_rotation(arc, 135);
-    lv_arc_set_bg_angles(arc, 0, 270);
-    lv_arc_set_value(arc, 100);
-    lv_obj_center(arc);
+//     lv_obj_set_size(arc, 50, 50);
+//     lv_arc_set_rotation(arc, 135);
+//     lv_arc_set_bg_angles(arc, 0, 270);
+//     lv_arc_set_value(arc, 100);
+//     lv_obj_center(arc);
 
-    return arc;
-}
+//     return arc;
+// }
 
-static void update_pomodoro_arc(lv_obj_t* obj) {
-    if (timer_is_running == true) {
-        uint32_t elapsed = timer_max - timer_elapsed32(timer_start);
-        uint16_t elapsed_percent = (elapsed * 100) / timer_max;
-        lv_arc_set_value(obj, elapsed_percent);
-    }
-}
+// static void update_pomodoro_bar(lv_obj_t* obj) {
+//     if (timer_is_running == true) {
+//         uint32_t elapsed = timer_max - timer_elapsed32(timer_start);
+//         uint16_t elapsed_percent = (elapsed * 100) / timer_max;
+//         if (elapsed_percent < 0) {
+//             elapsed_percent = 0;
+//         }
+//         lv_bar_set_value(obj, elapsed_percent, LV_ANIM_OFF);
+//     }
+// }
 
-// TODO this is something that will be reused in other menus, so we should move
-// it maybe to screens/menu_nav.c ?
 // TODO the layer is hardcoded.... and it will be different on Dilemma and Dilemma
 bool process_record_screen_pomodoro(uint16_t keycode, keyrecord_t* record)
 {
-    // TODO index is hardcoded...
     if (screen_index == 1) {
         process_record_menu(keycode, record, menus, &menu_index, sizeof(menus) / sizeof(obj_update_dilemma_menu_t));
     }

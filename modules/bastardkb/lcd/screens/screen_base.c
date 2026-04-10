@@ -10,19 +10,7 @@
 #include "menu.h"
 #include "ui_elements.h"
 #include "transactions.h"
-
-typedef struct {
-    uint8_t  mods;
-    bool     sniping;
-    bool     scrolling;
-    uint8_t  layer;
-    uint8_t  current_theme_id;
-    uint8_t  rgb_enabled;
-    uint8_t  rgb_effect_mode;
-    uint16_t rgb_val;
-    uint16_t dpi;
-    uint16_t s_dpi;
-} dilemma_status_t;
+#include "dilemma_sync.h"
 
 typedef struct {
     lv_obj_t *obj;
@@ -52,6 +40,7 @@ static void        menu_base_go_pomodoro(void);
 static void        menu_base_change_theme(void);
 static void        load_screen_base_menu(void);
 static void        load_screen_base_base(void);
+static void        refresh_screen_base(void);
 
 static lv_obj_t *ui_screen_base;
 static lv_obj_t *ui_screen_base_menu;
@@ -65,9 +54,6 @@ void load_module_base(void) {
     load_screen_base_base();
 }
 
-// TODO update things here only if this module is loaded.
-
-// TODO isolate the ui_screen_base into this folder, and instead return a pointer to it with this function?
 void init_screen_base(void) {
     ui_screen_base = lv_obj_create(NULL);
     lv_obj_t *cont = ui_create_container(ui_screen_base);
@@ -159,55 +145,10 @@ void init_screen_base(void) {
     };
 }
 
-void update_dilemma_status(void) {
-    dilemma_lcd_status.mods             = get_mods();
-    dilemma_lcd_status.layer            = get_highest_layer(layer_state);
-    dilemma_lcd_status.sniping          = dilemma_get_pointer_sniping_enabled();
-    dilemma_lcd_status.dpi              = dilemma_get_pointer_default_dpi();
-    dilemma_lcd_status.s_dpi            = dilemma_get_pointer_sniping_dpi();
-    dilemma_lcd_status.scrolling        = dilemma_get_pointer_dragscroll_enabled();
-    dilemma_lcd_status.rgb_enabled      = rgb_matrix_is_enabled();
-    dilemma_lcd_status.rgb_effect_mode  = rgb_matrix_get_mode();
-    dilemma_lcd_status.rgb_val          = rgb_matrix_get_val();
-    dilemma_lcd_status.current_theme_id = get_current_theme_id();
-}
-
 void housekeeping_task_screen_base(void) {
-    if (is_keyboard_master()) {
-        update_dilemma_status();
-        // if the keyboard is left, nothing to do - the screen will be refreshed by the main LCD housekeeping task
-        if (is_keyboard_left()) {
-            refresh_lcd_info();
-        }
-        // if the keyboard is right, we need to send the sync info over to the left side
-        // saving the theme id to eeprom has already been done in process_record
-        else {
-            bool            needs_sync   = false;
-            static bool     needs_resync = true; // perform an initial first sync
-            static uint32_t last_sync    = 0;
-            // // Check if the state values are different.
-            if (memcmp(&dilemma_lcd_status, &dilemma_lcd_status_prev, sizeof(dilemma_lcd_status))) {
-                needs_sync = true;
-            }
-            // check if a previous sync has failed
-            if (needs_resync) {
-                // we only want to retry syncing after a set amount of time
-                if (timer_elapsed32(last_sync) > 200) {
-                    needs_sync = true;
-                }
-            }
-            // perform the sync if requested
-            if (needs_sync) {
-                // try to sync, if it fails we will retry in the next housekeeping loop
-                if (transaction_rpc_send(RPC_ID_MOUSE_SYNC, sizeof(dilemma_lcd_status), &dilemma_lcd_status) == false) {
-                    needs_resync = true;
-                }
-                last_sync = timer_read32();
-            }
-        }
-
-        dilemma_lcd_status_prev = dilemma_lcd_status;
-    }
+    dilemma_lcd_status = get_dilemma_status();
+    refresh_screen_base();
+    dilemma_lcd_status_prev = dilemma_lcd_status;
 }
 
 static void menu_base_go_pomodoro(void) {
@@ -216,14 +157,10 @@ static void menu_base_go_pomodoro(void) {
 
 static void menu_base_change_theme(void) {
     cycle_theme_and_save_in_eeprom();
-    // if the keyboard is left, then we directly update the styles
-    // if the keyboard is right, we need to send the sync info over to the left side
-    // that will be done in housekeeping
-    if (is_keyboard_left()) {
-        update_styles_from_current_theme();
-    }
-    // TODO this is done in cycle_theme_and_save_in_eeprom, we can remove it
-    // dilemma_lcd_status.current_theme_id = get_current_theme_id();
+    // TODO remove this? should only be called by left anyway
+    // if (is_keyboard_left()) {
+    update_styles_from_current_theme();
+    // }
 }
 
 static const char *rgb_matrix_get_effect_name(void) {
@@ -335,7 +272,6 @@ static void update_rgb_bar(lv_obj_t *obj, const dilemma_status_t current_status,
     const bool rgb_change = (current_status.rgb_enabled != prev_status.rgb_enabled);
     if (!current_status.rgb_enabled) {
         if (rgb_change) {
-            // lv_label_set_text(ui_label_rgb_number, "Off"); // test
             lv_bar_set_value(obj, 0, LV_ANIM_OFF);
         }
     } else {
@@ -348,21 +284,15 @@ static void update_rgb_bar(lv_obj_t *obj, const dilemma_status_t current_status,
 
 static void update_mod_scroll(lv_obj_t *obj, const dilemma_status_t current_status, const dilemma_status_t prev_status) {
     if (current_status.scrolling != prev_status.scrolling) {
-        if (current_status.scrolling) {
-            lv_event_send(obj, LV_EVENT_PRESSED, NULL);
-        } else {
-            lv_event_send(obj, LV_EVENT_RELEASED, NULL);
-        }
+        uint32_t event = current_status.scrolling ? LV_EVENT_PRESSED : LV_EVENT_RELEASED;
+        lv_event_send(obj, event, NULL);
     }
 }
 
 static void update_mod_snipe(lv_obj_t *obj, const dilemma_status_t current_status, const dilemma_status_t prev_status) {
     if (current_status.sniping != prev_status.sniping) {
-        if (current_status.sniping) {
-            lv_event_send(obj, LV_EVENT_PRESSED, NULL);
-        } else {
-            lv_event_send(obj, LV_EVENT_RELEASED, NULL);
-        }
+        uint32_t event = current_status.sniping ? LV_EVENT_PRESSED : LV_EVENT_RELEASED;
+        lv_event_send(obj, event, NULL);
     }
 }
 
@@ -403,61 +333,50 @@ static void update_mod_dpi_bar(lv_obj_t *obj, const dilemma_status_t current_sta
 }
 
 static void load_screen_base_base(void) {
-    // release_all_buttons(menus, sizeof(menus) / sizeof(obj_update_dilemma_menu_t));
-    // lv_disp_load_scr(ui_screen_base);
-    // // menu_index = 0;
-    // screen_index = 0;
-
-    load_screen_xx_base(menus, &screen_index, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_base);
+    load_screen_xx_base(menus, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_base);
 }
 
 static void load_screen_base_menu(void) {
-    // lv_disp_load_scr(ui_screen_base_menu);
-    //  // by default, the top button is pushed
-    // menu_index = 0;
-    // release_all_buttons(menus, sizeof(menus) / sizeof(obj_update_dilemma_menu_t));
-    // press_menu_button(menus[0]);
-    // screen_index = 1;
-
-    load_screen_xx_menu(menus, &menu_index, &screen_index, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_base_menu);
+    load_screen_xx_menu(menus, sizeof(menus) / sizeof(obj_update_dilemma_menu_t), ui_screen_base_menu);
 }
 
 void refresh_screen_base(void) {
-    if (is_keyboard_left()) {
-        const dilemma_status_t current_status = (const dilemma_status_t)dilemma_lcd_status;
-        const dilemma_status_t prev_status    = (const dilemma_status_t)dilemma_lcd_status_prev;
-        static int             last_layer;
-        int                    current_layer = get_highest_layer(layer_state);
+    const dilemma_status_t current_status = (const dilemma_status_t)dilemma_lcd_status;
+    const dilemma_status_t prev_status    = (const dilemma_status_t)dilemma_lcd_status_prev;
+    static int             last_layer;
+    int                    current_layer = get_highest_layer(layer_state);
 
-        if (current_layer != last_layer) {
-            switch (current_layer) {
-                case 0:
-                    // default:
-                    // we only trigger things if we come back from the menu layer
-                    if (screen_index == 1) {
-                        load_screen_base_base();
-                        trigger_menu_element(menus, menu_index);
-                        screen_index = 0;
-                    }
-                    break;
-                case LAYER_MENU:
+    if (current_layer != last_layer) {
+        switch (current_layer) {
+            case 0:
+                // default:
+                // we only trigger things if we come back from the menu layer
+                if (screen_index == 1) {
+                    load_screen_base_base();
+                    trigger_menu_element(menus, menu_index);
+                    menu_index   = 0;
+                    screen_index = 0;
+                }
+                break;
+            case LAYER_MENU:
+                if (screen_index == 0) {
                     load_screen_base_menu();
                     screen_index = 1;
-                    break;
-                default:
-                    break;
-            }
+                }
+                break;
+            default:
+                break;
         }
+    }
 
-        // if(current_layer == 0){
+    if (is_keyboard_left()) {
         for (int i = 0; i < sizeof(widgets) / sizeof(obj_update_dilemma_lcd_status_t); i++) {
             lv_obj_t *obj = widgets[i].obj;
             if (obj && widgets[i].update_function) widgets[i].update_function(obj, current_status, prev_status);
         }
-        // }
-
-        last_layer = current_layer;
     }
+
+    last_layer = current_layer;
 }
 
 bool process_record_screen_base(uint16_t keycode, keyrecord_t *record) {
@@ -466,27 +385,4 @@ bool process_record_screen_base(uint16_t keycode, keyrecord_t *record) {
         process_record_menu(keycode, record, menus, &menu_index, sizeof(menus) / sizeof(obj_update_dilemma_menu_t));
     }
     return true;
-}
-
-/*
-called by right side, executed by left side (where the screen is)
-we do not store the updated config in eeprom, this is done by master in cycle_theme
-if later we would like to do that, first we need to sync halves in the dilemma code with kb eeprom, and then implement
-theme sync here with user eeprom
-*/
-// TODO the theme part should be separated and managed independentely in theme.c... or, accept that the theme can only be changed through the base screen anyway
-void mouse_info_sync_handler(uint8_t initiator2target_buffer_size, const void *initiator2target_buffer, uint8_t target2initiator_buffer_size, void *target2initiator_buffer) {
-    if (is_keyboard_left()) {
-        if (initiator2target_buffer_size == sizeof(dilemma_lcd_status)) {
-            dilemma_lcd_status_prev = dilemma_lcd_status;
-            dilemma_lcd_status      = *(const dilemma_status_t *)initiator2target_buffer;
-
-            if (dilemma_lcd_status_prev.current_theme_id != dilemma_lcd_status.current_theme_id) {
-                set_current_theme_id(dilemma_lcd_status.current_theme_id);
-                update_styles_from_current_theme();
-            }
-            // TODO is this not done in the main housekeeping?
-            refresh_lcd_info();
-        }
-    }
 }

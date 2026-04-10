@@ -16,9 +16,9 @@ typedef union {
     struct {
         uint8_t current_theme_id;
     } __attribute__((packed));
-} dilemma_config_lcd_t;
+} dilemma_config_theme_t;
 
-dilemma_config_lcd_t dilemma_config_lcd;
+dilemma_config_theme_t dilemma_config_theme;
 
 typedef struct {
     lv_style_t mod_btn;
@@ -36,9 +36,9 @@ typedef struct {
 ui_styles_t current_style;
 
 void load_themes(void);
-void read_dilemma_theme_config_from_eeprom(dilemma_config_lcd_t *config);
+void read_dilemma_theme_config_from_eeprom(dilemma_config_theme_t *config);
 void load_dilemma_theme_config_from_eeprom(void);
-void write_dilemma_theme_config_to_eeprom(dilemma_config_lcd_t *config);
+void write_dilemma_theme_config_to_eeprom(dilemma_config_theme_t *config);
 
 void     init_styles(void);
 void     update_styles_from_current_theme(void);

@@ -55,7 +55,7 @@ Three defined themes:
                            (struct-based, uses ui_theme approach)
 
 EEPROM persistence:
-  Theme ID stored as 1 byte in dilemma_config_lcd_t (union with uint8_t raw).
+  Theme ID stored as 1 byte in dilemma_config_theme_t (union with uint8_t raw).
   Only the current_theme_id is persisted — not all style values.
   Reason: minimize EEPROM usage; styles are always recomputed from theme ID at boot.
 
